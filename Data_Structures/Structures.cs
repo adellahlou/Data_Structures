@@ -1,26 +1,26 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
-using System.Collections.Generic;
-using System.Collections;
 using System.CodeDom;
 using System.Diagnostics;
 using System.Reflection.Emit;
 using System.Dynamic;
+using System.Collections.Generic;
 using System.Runtime.Remoting.Messaging;
 using System.Text.RegularExpressions;
+using System.Collections;
 
 namespace DataStructures
 {
 	#region
-	public interface DynamicArray<T> 
+	/*public interface DynamicArray<T> 
 	{
 		void Add (T newVal);
 		void Remove (int index);
 		bool Contains (T val);
-	}
+	}*/
 
-	public class DynamicArraySimple<T> : IEnumerable<T>, DynamicArray<T>
+	public class DynamicArraySimple<T> : IEnumerable<T>
 		where T : IComparable<T>, IEquatable<T>
 	{
 		private T[] data;
@@ -84,18 +84,22 @@ namespace DataStructures
 
 			for( int i = 0; i < data.Length; i++) 
 			{
-				if(i in indices)
+				if (Searcher.LinearSeacher (indices, i))
+					continue;
+				else
+					_data = data [i];
 			}
 		}
 			
 		public static DynamicArraySimple<int> IntRange (int start = 1, int end = 512, int step = 1)
 		{
 			int element_count = (end - start) / step;
-
 			DynamicArraySimple<int> ret = new DynamicArraySimple<int> (count);
-			for (int i = start; i < end; i += step) {
-			
-			
+
+
+			for (int i = start, index = 0; i < end; i += step, index++) 
+			{
+				ret [index] = i;
 			}
 
 		}
@@ -107,9 +111,6 @@ namespace DataStructures
 		}
 	}
 	#endregion
-
-
-
 
 
 
@@ -230,7 +231,7 @@ namespace DataStructures
 			head = _head;
 		}
 
-		public LList ()
+
 
 		public LLNode<T> Head 
 		{
@@ -262,28 +263,61 @@ namespace DataStructures
 	{
 
 	}
+
 	public class DLList : IEnumerable
 	{
 
 	}
 
 
+	public class ASortedList<T>
+	{}
 
 
-
-	public class BinaryTree
+	public class AStack<T>
 	{
 
 	}
 
-	public class RedBlackTree
+
+
+	public class GraphNode
+	{
+
+	}
+
+	public class Graph
+	{
+
+	}
+		
+	public class BinaryTreeNode<T>
+	{
+
+	}
+		
+	public class BinarySearchTree<T>
 	{
 
 	}
 
 
-	public clas
+
+	public class RedBlackTreekNode<T>
+	{
+
+	}
+
+	public class RedBlackTree<T>
+	{
+
+	}
 
 
+	public class SkipList<T> 
+	{
+
+	}
+		
 
 }
