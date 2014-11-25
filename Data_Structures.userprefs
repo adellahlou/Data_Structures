@@ -1,9 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="EmptyClass.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Data_Structures/Algorithms.cs">
     <Files>
-      <File FileName="Data_Structures/Program.cs" Line="5" Column="5" />
-      <File FileName="EmptyClass.cs" Line="2" Column="2" />
+      <File FileName="Data_Structures/Program.cs" Line="1" Column="1" />
+      <File FileName="Data_Structures/Algorithms.cs" Line="21" Column="21" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
