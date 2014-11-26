@@ -36,6 +36,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Algorithms.cs" />
     <Compile Include="Structures.cs" />
+    <Compile Include="DynamicArrays.cs" />
+    <Compile Include="LinkedLists.cs" />
+    <Compile Include="Stacks.cs" />
+    <Compile Include="Queues.cs" />
+    <Compile Include="BinarySearchTree.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

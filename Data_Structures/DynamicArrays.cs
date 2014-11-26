@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Threading.Tasks;
-using System.Runtime.InteropServices;
-using System.CodeDom;
-using System.Diagnostics;
-using System.Reflection.Emit;
-using System.Dynamic;
 using System.Collections.Generic;
-using System.Runtime.Remoting.Messaging;
-using System.Text.RegularExpressions;
 using System.Collections;
-using System.ComponentModel;
-using System.Net.Sockets;
-using System.IO;
 
 namespace DataStructures
 {
@@ -99,7 +88,7 @@ namespace DataStructures
 
 				data = _data;
 			} 
-				
+
 			foreach (T i in newValues) {
 				data [data.Length] = i;
 			}
@@ -128,7 +117,7 @@ namespace DataStructures
 				}
 			}
 		}
-			
+
 		public static DynamicArraySimple<int> IntRange (int start = 1, int end = 512, int step = 1)
 		{
 			int element_count = (end - start) / step;
@@ -159,8 +148,6 @@ namespace DataStructures
 		}
 	}
 	#endregion
-
-
 
 	public class DynamicArrayComponent<T> : IEnumerable<T>
 		where T : IComparable<T>, IEquatable<T>
@@ -274,7 +261,7 @@ namespace DataStructures
 		{
 			return GetEnumerator ();
 		}
-			
+
 		public override string ToString ()
 		{
 			return string.Format ("Capacity: {0} Length: {1}]", capacity, count);
@@ -295,207 +282,5 @@ namespace DataStructures
 		}
 	}
 
-
-	//Simple Linked List Implementation
-
-	public class LLNode<T> :  IComparable<T>, IEquatable<T>
-			where T : IComparable<T>, IEquatable<T>
-	{
-		private T data;
-		private LLNode<T> next;
-
-		public LLNode (T _data = default(T), LLNode<T> _next = null)
-		{
-			data = _data;
-			next = _data;
-		}
-
-		public LLNode<T> Next {
-			get { return next; }
-			set { next = value; }
-		}
-
-		public T Data {
-			get{ return data; }
-			set{ data = value; }
-		}
-	}
-
-	public class LList<T> : IEnumerable
-			where T: IComparable<T>, IEquatable<T>
-	{
-
-		private int length;
-		private LLNode<T> head, tail;
-
-		public LList ( LLNode<T> _head = new LLNode<T>())
-		{
-			head = _head;
-		}
-
-		public LLNode<T> this[int index]
-		{
-			get { return this.GetNode (index); }
-			set
-			{
-				LLNode<T> toModify = GetNode(index);
-				toModify.Data = value;
-			}
-		}
-
-		public bool Append( params T[] newValues)
-		{
-			foreach(T val in newValues)
-			{
-				tail.Next = new LLNode<T> (val);
-				tail = tail.Next;
-			}
-
-			length += newValues.Length;
-
-			return true;
-		}
-
-		public bool Remove( params int[] indices)
-		{
-			var sortedIndices = from i in indices
-			                    where i >= 0 && i < length
-			                    orderby i ascending
-			                    select i;
-
-
-
-		}
-			
-		public LLNode<T> GetNode( int index)
-		{
-			if (index < 0 || index >= length )
-				throw new ArgumentOutOfRangeException();
-
-			int current = 0;
-			LLNode<T> currentNode = head;
-
-			while (current < index) {
-				currentNode = currentNode.Next;
-				current++;
-			}
-
-			return currentNode;
-		}
-
-		public LLNode<T> Head 
-		{
-			get { return head; }
-
-			set { 
-				if (value != null) {
-					value.Next = head.Next;
-					head = value; 
-				} 
-				else
-					throw new NullReferenceException();
-			}
-		}
-
-		public LLNode<T> Tail 
-		{
-			get { return tail; }
-		}
-
-		public int Length 
-		{
-			get{ return length; }
-		}
-	}
-
-
-
-
-
-
-	//Simple DLList implementation
-	public class DLLNode<T> : IEquatable<T>, IComparable<T> 
-		where T: IEquatable<T>, IComparable<T>
-	{
-
-	}
-
-	public class DLList : IEnumerable
-	{
-
-	}
-
-
-	public class ASortedList<T>
-	{}
-
-
-	public class AStack<T>
-	{
-
-	}
-
-
-
-	public class GraphNode
-	{
-
-	}
-
-	public class Graph
-	{
-
-	}
-		
-	public class BinaryTreeNode<T> : IEquatable<T>, IComparable<T>
-		where T : IEquatable<T>, IComparable<T>
-
-	{
-
-		BinaryTreeNode<T> parent, left, right;
-		private T data;
-
-		public BinaryTreeNode( T _data = default(T), BinaryTreeNode<T> _parent = null, BinaryTreeNode<T> _left = null,BinaryTreeNode<T> _right = null)
-		{
-			data = _data;
-			parent = _parent;
-			left = _left;
-			right = _right;
-		}
-
-
-		public override string ToString ()
-		{
-			return string.Format ("Data: {0}", data);
-		}
-	}
-		
-	public class BinarySearchTree<T>
-	{
-		private BinaryTreeNode root;
-		private int size, height;
-
-
-
-	}
-
-
-
-	public class RedBlackTreekNode<T>
-	{
-
-	}
-
-	public class RedBlackTree<T>
-	{
-
-	}
-
-
-	public class SkipList<T> 
-	{
-
-	}
-		
-
 }
+
