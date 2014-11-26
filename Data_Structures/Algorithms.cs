@@ -10,7 +10,7 @@ using System.Dynamic;
 using System.Runtime.Remoting.Messaging;
 using System.Text.RegularExpressions;
 
-namespace Data_Structures.Algorithms
+namespace DataStructures.Algorithms
 {
 
 	public class Utility
@@ -67,7 +67,7 @@ namespace Data_Structures.Algorithms
 
 	public class Searcher
 	{
-		public static int LinearSearch(T collection)
+		public static int LinearSearch(T collection, T target)
 		{
 			throw new NotImplementedException();
 		}

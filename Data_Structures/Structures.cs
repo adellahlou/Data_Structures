@@ -9,22 +9,23 @@ using System.Collections.Generic;
 using System.Runtime.Remoting.Messaging;
 using System.Text.RegularExpressions;
 using System.Collections;
+using System.ComponentModel;
 
 namespace DataStructures
 {
 	#region
-	/*public interface DynamicArray<T> 
+	public interface DynamicArray<T> 
 	{
 		void Add (T newVal);
 		void Remove (int index);
 		bool Contains (T val);
-	}*/
+	}
 
 	public class DynamicArraySimple<T> : IEnumerable<T>
 		where T : IComparable<T>, IEquatable<T>
 	{
 		private T[] data;
-		private int capacity;
+		protected int capacity;
 
 		public DynamicArraySimple (int _capacity = 512)
 		{
@@ -42,13 +43,15 @@ namespace DataStructures
 				data[i] = toCopy[i];
 			}
 		}
-			
-		public int Capacity
+
+
+
+		public int Capacity 
 		{
 			get{ return capacity;}
 		}
 
-		public int Length
+		public int Length 
 		{
 			get { return data.Length; }
 		}
@@ -60,10 +63,16 @@ namespace DataStructures
 		}
 
 
-		public void Add (params T[] newValues)
+
+		public void Add (params T[] newValues) 
 		{
 			if (data.Length >= capacity) {
-				T _data = new T[2 * capacity];
+				int growthFactor = 2;
+
+				while (newValues.Length + capacity >= growthFactor * capacity)
+					growthFactor + 2;
+
+				T _data = new T[growthFactor * capacity];
 
 				for (int i = 0; i < capacity; i++) {
 					_data [i] = data [i];
@@ -78,32 +87,46 @@ namespace DataStructures
 		}
 
 		//we shall improve upon this in DynamicArray Component so it's no longer O(n) time
-		public void Remove (params int[] indices)
+		//for rebuilding. Note that since we have to search, it will always have at least
+		//O(n) time for search unless we sort our list.
+		public void Remove (params int[] indices) 
 		{
-			T[] _data = new T[capacity];
+			int[] sortedIndices = Algorithms.Sorter.QuickSort (indices);
+			int relevantIndex = 1;
 
-			for( int i = 0; i < data.Length; i++) 
+			for( int i = sortedIndices[0]; i + 1 < data.Length; i++) 
 			{
-				if (Searcher.LinearSeacher (indices, i))
-					continue;
-				else
+				data[i]
+
 					_data = data [i];
 			}
+
+			data = _data;
 		}
 			
 		public static DynamicArraySimple<int> IntRange (int start = 1, int end = 512, int step = 1)
 		{
 			int element_count = (end - start) / step;
-			DynamicArraySimple<int> ret = new DynamicArraySimple<int> (count);
+			DynamicArraySimple<int> ret = new DynamicArraySimple<int> (element_count);
 
-
-			for (int i = start, index = 0; i < end; i += step, index++) 
-			{
+			for (int i = start, index = 0; i < end; i += step, index++) {
 				ret [index] = i;
 			}
 
+			return ret;
 		}
 
+
+
+		public IEnumerable<T> GetEnumerator()
+		{
+			return data.GetEnumerator ();
+		}
+
+		IEnumerator GetEnumerator()
+		{
+			return IEnumerable<T>.GetEnumerator ();
+		}
 
 		public override string ToString ()
 		{
@@ -117,9 +140,21 @@ namespace DataStructures
 	public class DynamicArrayComponent<T> : IEnumerable<T>
 		where T : IComparable<T>, IEquatable<T>
 	{
-		private DynamicArraySimple<T> dataComponents;
-		private int capacity;
-		private int subCapacity;
+		private DynamicArraySimple<T>[] dataComponents;
+
+		protected int capacity, 
+		subCapacity;
+		private int currentComponent,
+			subIndex;
+
+		private int NextSlot
+		{
+			get
+			{ 
+				int i = 0
+				while ;
+			}
+		}
 
 		public DynamicArrayComponent(int _capacity = 512, int _subCapacity = 16)
 		{
@@ -143,9 +178,37 @@ namespace DataStructures
 			throw new NotSupportedException();
 		}
 
-		public T this [int index] {
-			get { return data [index]; }
-			set { data [index] = value; }
+		public int Capacity
+		{
+			get { return capacity;} 
+		}
+
+		public int SubCapacity
+		{
+			get { return subCapacity;}
+		}
+
+		public T this [int index] 
+		{
+			get 
+			{
+				int componentIndex;
+				int subIndex;
+				ConvertIndex (index, componentIndex, subIndex);
+				return dataComponents[componentIndex][subIndex]; 
+			}
+			set 
+			{
+				int componentIndex;
+				int subIndex;
+				ConvertIndex (index, componentIndex, subIndex);
+				dataComponents[componentIndex][subIndex] = value; 
+			}
+		}
+
+		private void ConvertIndex(int listIndex, out int componentIndex, out int subIndex )
+		{
+
 		}
 
 		public void Add (params T[] newValues)
@@ -173,14 +236,22 @@ namespace DataStructures
 			throw new NotImplementedException ();
 		}
 
-	
+		public IEnumerable<T> GetEnumerator()
+		{
+			return data.GetEnumerator ();
+		}
 
+		IEnumerator GetEnumerator()
+		{
+			return GetEnumerator ();
+		}
+			
 		public override string ToString ()
 		{
 			return string.Format ("Capacity: {0} Length: {1}]", capacity, count);
 		}
 
-		public static DynamicArraySimple<int> IntRange (int start = 1, int end = 512, int step = 1)
+		public static DynamicArrayComponent<int> IntRange (int start = 1, int end = 512, int step = 1)
 		{
 			int element_count = (end - start) / step;
 
