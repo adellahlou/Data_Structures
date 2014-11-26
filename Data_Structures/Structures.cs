@@ -38,7 +38,7 @@ namespace DataStructures
 			data = new T[toCopy.Capacity];
 			capacity = toCopy.Capacity;
 
-			for( int i =0; i < toCopy.Length; i++ )
+			for( int i = 0; i < toCopy.Length; i++ )
 			{
 				data[i] = toCopy[i];
 			}
@@ -92,16 +92,17 @@ namespace DataStructures
 		public void Remove (params int[] indices) 
 		{
 			int[] sortedIndices = Algorithms.Sorter.QuickSort (indices);
-			int relevantIndex = 1;
+			int relevantIndex = (sortedIndices.Length > 1) ?  1 : -1;
+			int toReplace = sortedIndices [0];
 
-			for( int i = sortedIndices[0]; i + 1 < data.Length; i++) 
-			{
-				data[i]
-
-					_data = data [i];
+			for (int i = sortedIndices [0]; i + 1 < data.Length; i++) {
+				if (relevantIndex > 0 && i + 1 == sortedIndices [relevantIndex])
+					relevantIndex++;
+				else {
+					data [toReplace] = data[i + 1];
+					toReplace++;
+				}
 			}
-
-			data = _data;
 		}
 			
 		public static DynamicArraySimple<int> IntRange (int start = 1, int end = 512, int step = 1)
